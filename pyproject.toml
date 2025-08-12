@@ -11,6 +11,7 @@ dependencies = [
   "langgraph>=0.2",
   "langchain>=0.3",
   "pydantic>=2.7",
+  "pydantic-settings>=2.5",
   "python-dotenv>=1.0",
   "loguru>=0.7",
 ]
@@ -19,7 +20,8 @@ dependencies = [
 # dev-группа собирается/устанавливается: `uv sync --group dev`
 dev = [
   "ruff>=0.5",
-  "pre-commit>=3.7"
+  "pre-commit>=3.7",
+  "pytest>=8.3",
 ]
 
 [tool.mypy]
@@ -32,7 +34,11 @@ line-length = 100
 select = ["E","F","I","B","UP","C90","N","S","W","PL"]
 ignore = ["E501"]
 
-[tool.setuptools]
-packages = [
+[tool.pytest.ini_options]
+pythonpath = ["src"]
 
-]
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
