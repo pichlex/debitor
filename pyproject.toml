@@ -1,0 +1,38 @@
+[project]
+name = "debitor"
+version = "0.1.0"
+description = "Voice agent on LangGraph"
+authors = [{ name = "ACME", email = "dev@acme.io" }]
+requires-python = ">=3.10"
+readme = "README.md"
+
+# Базовые зависимости рантайма
+dependencies = [
+  "langgraph>=0.2",
+  "langchain>=0.3",
+  "pydantic>=2.7",
+  "python-dotenv>=1.0",
+  "loguru>=0.7",
+]
+
+[dependency-groups]
+# dev-группа собирается/устанавливается: `uv sync --group dev`
+dev = [
+  "ruff>=0.5",
+  "pre-commit>=3.7"
+]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_unused_ignores = true
+
+[tool.ruff]
+line-length = 100
+select = ["E","F","I","B","UP","C90","N","S","W","PL"]
+ignore = ["E501"]
+
+[tool.setuptools]
+packages = [
+
+]
