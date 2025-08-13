@@ -22,3 +22,10 @@ repos:
         additional_dependencies: []
         args: []
         #files: ^src/|^tests/
+
+  # Поиск случайно закоммиченных секретов
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]

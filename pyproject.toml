@@ -13,6 +13,17 @@ dependencies = [
   "pydantic>=2.7",
   "python-dotenv>=1.0",
   "loguru>=0.7",
+  "streamlit>=1.48.0",
+  "typer>=0.16.0",
+  "langgraph-checkpoint-sqlite>=2.0.11",
+  "langchain-openai>=0.3.29",
+  "opentelemetry-api>=1.36.0",
+  "opentelemetry-sdk>=1.36.0",
+  "opentelemetry-exporter-otlp>=1.36.0",
+  "opentelemetry-instrumentation-fastapi>=0.57b0",
+  "opentelemetry-instrumentation-httpx>=0.57b0",
+  "opentelemetry-instrumentation-logging>=0.57b0",
+  "pydantic-settings>=2.10.1",
 ]
 
 [dependency-groups]
@@ -34,5 +45,5 @@ ignore = ["E501"]
 
 [tool.setuptools]
 packages = [
-
+  "src"
 ]
