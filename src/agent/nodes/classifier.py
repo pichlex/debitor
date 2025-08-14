@@ -8,6 +8,9 @@ from ..config import settings
 from ..prompts import DESC_AGREEMENT, DESC_CLAIMS_SUB, DESC_LPR, DESC_NAMED_DATE_WINDOW, DESC_REASON
 from ..state import AgentState
 
+from dotenv import load_dotenv
+load_dotenv()
+
 _model = ChatOpenAI(model=settings.model_name, temperature=0)
 
 class OutRoute(BaseModel):
