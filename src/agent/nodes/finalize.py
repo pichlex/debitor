@@ -1,22 +1,24 @@
-import os
-from typing import Any
+# src/agent/nodes/finalize.py
+from __future__ import annotations
 
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_openai import ChatOpenAI
+from typing import Any, Dict
 
-from ..prompts import FINALIZE_PROMPT
-from ..state import AgentState
+# Ничего не импортируем из LLM: финализация не должна генерировать клиентский текст.
 
 
-def finalize_node(state: AgentState) -> dict[str, Any]:
-    """Финализирующий узел: формирует краткий деловой ответ по контексту."""
-    model_name = os.getenv("MODEL_NAME", "gpt-4o-mini")
-    llm = ChatOpenAI(model=model_name, temperature=0)
+def finalize_node(state: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Прозрачная финализация шага:
+    - не добавляет клиентских сообщений (оставляет последнюю реплику узла, который шёл до finalize);
+    - НЕ перезаписывает stage (если он уже установлен);
+    - убирает возможные маркеры продолжения (resume_at), чтобы следующий ход стартовал через entry.
+    """
+    scratch = dict(state.get("scratch", {}) or {})
 
-    prompt = ChatPromptTemplate.from_messages([
-        ("system", FINALIZE_PROMPT),
-        MessagesPlaceholder(variable_name="messages"),
-    ])
-
-    ai = (prompt | llm).invoke({"messages": state.get("messages", [])})
-    return {"messages": [ai]}
+    return {
+        # Никаких новых AIMessage: на экране останется текст из предыдущего узла
+        "messages": [],
+        "stage": state.get("stage") or "Финализация",
+        "scratch": scratch,
+        "route": "unknown",
+    }
